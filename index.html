@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Surveillance System</title>
+    <style>
+        #log-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Road Surveillance System</h1>
+    <div id="log-container"></div> <!-- container to display logs on screen -->
+
+    <script src="roadsurveillance.js"></script>
+    <script>
+        // initialize RoadSurveillance class
+        const surveillanceSystem = new RoadSurveillance();
+
+        // add logs to the log container
+        function addLog(message) {
+            const logContainer = document.getElementById("log-container");
+            const logElement = document.createElement("p");
+            logElement.textContent = message;
+            logContainer.appendChild(logElement);
+
+            // to always show latest logs
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Override console.log to also add logs to the log container
+        console.log = function(message) {
+            addLog(message);
+        };
+
+        // adding cameras and sensors with corresponding locations
+        surveillanceSystem.addCamera("Intersection A", "CAM001");
+        surveillanceSystem.addCamera("Highway B", "CAM002");
+        surveillanceSystem.addSensor("Traffic Flow", "Intersection A", "SENSOR001");
+        surveillanceSystem.addSensor("Weather", "Highway B", "SENSOR002");
+
+        // monitoring of the traffic conditions
+        surveillanceSystem.monitorTraffic();
+    </script>
+</body>
+</html>
